@@ -499,9 +499,10 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   // Optimized with transform3d and took some objects out from the loop
-  var phase = Math.sin(document.body.scrollTop / 1250);
+
   for (var i = 0; i < items.length; i++) {
-    items[i].style.transform = 'translate3d(' + ((i % 8) * 256 + 100 * (phase + (i % 5))) + 'px, 0px, 0px)';
+    var phase = Math.sin(document.body.scrollTop / 1250 + (i%5));
+    items[i].style.transform = 'translate3d('+100 * phase +'px, 0px, 0px)';
   }
 
   window.performance.mark("mark_end_frame");
@@ -527,6 +528,7 @@ document.addEventListener('DOMContentLoaded',
     elem.classList.add('mover');
     elem.src = "images/pizza_b.png";
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    elem.style.left = (i % cols) * s + 'px';
     document.getElementById("movingPizzas1").appendChild(elem);
   }
   window.requestAnimationFrame(updatePositions);
